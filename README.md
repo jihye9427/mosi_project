@@ -6,7 +6,7 @@
 
 ![Java](https://img.shields.io/badge/Java-17-ED8B00?style=flat&logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5-6DB33F?style=flat&logo=spring-boot&logoColor=white)
-![React](https://img.shields.io/badge/React-19.1-61DAFB?style=flat&logo=react&logoColor=black)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=flat&logo=javascript&logoColor=black)
 ![Oracle](https://img.shields.io/badge/Oracle-21c-F80000?style=flat&logo=oracle&logoColor=white)
 ![Elasticsearch](https://img.shields.io/badge/Elasticsearch-8.18-005571?style=flat&logo=elasticsearch&logoColor=white)
 
@@ -198,6 +198,7 @@ src/
 
 **개발**
 - 상품 등록/수정/삭제 기능 구현
+- 부산 맛집 관광정보 연동 (공공데이터 API)
 - 장바구니 담기/선택삭제/전체삭제
 - 주문서 작성 및 결제 처리
 - 주문/판매 목록 조회
