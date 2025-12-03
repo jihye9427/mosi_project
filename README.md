@@ -209,6 +209,18 @@ src/
 - 통합테스트 계획 및 실행
 
 
-## License
+---
 
-This project is licensed under the MIT License.
+## 산출물
+
+- [포트폴리오 PDF](링크)
+- [페르소나 기능정의서] (https://docs.google.com/spreadsheets/d/1QKKEvo0nVcBEJAyDEBFBM496F3-4f65r/edit?gid=1319260379#gid=1319260379)
+- [요구사항 정의서](https://docs.google.com/spreadsheets/d/1VXpIZ5-rT7_fLe_U5FCXdd0h5IJrQidH/edit?gid=1561463045#gid=1561463045)
+- [프로세스 설계서]([링크](https://docs.google.com/presentation/d/1_pgvyWWzQDBeBBSHaLamtox-gQQYju_f/edit?slide=id.g2dadc9c1130_1_58#slide=id.g2dadc9c1130_1_58)
+- [태스크플로우](https://docs.google.com/presentation/d/1nFfK1T-nJOM0TUCwj06yfqC8fmamy5R3/edit?slide=id.p1#slide=id.p1)
+- [테이블 레이아웃]((https://docs.google.com/spreadsheets/d/1ZfHPeRAbarXAKAR2D8f9YlLAZPi2QodF/edit?gid=1989820936#gid=1989820936)
+- [사용자 시나리오](https://docs.google.com/presentation/d/1ZayX1U28bMgI0mGvWGw_SdUq_x-2WwSG/edit?slide=id.p1#slide=id.p1)
+- [화면 설계서]([링크](https://docs.google.com/presentation/d/1K32BsfiSzPAiYfDvWd85FCkAvwKMgEiH/edit?slide=id.p1#slide=id.p1)
+- [통합테스트시나리오](https://docs.google.com/spreadsheets/d/1PeNGL0axlwv94y0EeEPb_rsayCyPaZbH/edit?gid=801120606#gid=801120606)
+
+---
