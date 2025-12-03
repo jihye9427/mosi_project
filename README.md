@@ -213,7 +213,8 @@ src/
 
 ## 산출물
 
-- [포트폴리오 PDF](링크)
+- [포트폴리오 PDF]
+  (https://www.canva.com/design/DAG6LgRaHFo/3E2F9n_CihhW8aP712SVtw/edit?utm_content=DAG6LgRaHFo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 - [페르소나 기능정의서] (https://docs.google.com/spreadsheets/d/1QKKEvo0nVcBEJAyDEBFBM496F3-4f65r/edit?gid=1319260379#gid=1319260379)
 - [요구사항 정의서] (https://docs.google.com/spreadsheets/d/1VXpIZ5-rT7_fLe_U5FCXdd0h5IJrQidH/edit?gid=1561463045#gid=1561463045)
 - [프로세스 설계서] (https://docs.google.com/presentation/d/1_pgvyWWzQDBeBBSHaLamtox-gQQYju_f/edit?slide=id.g2dadc9c1130_1_58#slide=id.g2dadc9c1130_1_58)
