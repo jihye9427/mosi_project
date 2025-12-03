@@ -1,0 +1,116 @@
+
+-- 기존 테이블 삭제
+DROP TABLE product CASCADE CONSTRAINT;
+DROP TABLE product_image CASCADE CONSTRAINT;
+DROP TABLE product_course_point CASCADE CONSTRAINT;
+-- 기존 시퀀스 삭제
+DROP SEQUENCE PRODUCT_PRODUCT_ID_SEQ;
+DROP SEQUENCE IMAGE_IMAGE_ID_SEQ;
+DROP SEQUENCE COURSE_COURSE_ID_SEQ;
+
+
+-- 테이블 생성
+CREATE TABLE product(
+        product_id  			NUMBER(10),
+        member_id  				NUMBER(10),
+        category  				varchar2(30)  	NOT NULL,
+        title  						varchar2(90),
+        guide_yn  				char(1),
+      	normal_price  		NUMBER(7),
+        guide_price  			NUMBER(7),
+        sales_price  			NUMBER(7),
+        sales_guide_price NUMBER(7),
+        total_day 				NUMBER(2),
+        total_time 				NUMBER(2),
+  			req_money  				NUMBER(7),
+        sleep_info  			char(1),
+        transport_info  	varchar2(45),
+        food_info  				char(1),
+        req_people   			varchar2(45),
+        target  					varchar2(45),
+        stucks  					varchar2(90),
+        description  			varchar2(1500),
+        detail  					varchar2(3000),
+        file_name     		varchar2(255),
+        file_type     		varchar2(50),
+        file_size     		NUMBER,
+        file_data     		BLOB,
+        price_detail			varchar2(450),
+        gprice_detail			varchar2(450),
+        status   					varchar2(12)		NOT NULL,
+        create_date  			date,
+        update_date  			date
+);
+
+-- 제약 조건 추가
+ALTER TABLE product ADD PRIMARY KEY(product_id);
+ALTER TABLE product ADD FOREIGN KEY(member_id) REFERENCES member(member_id) ON DELETE CASCADE;
+ALTER TABLE product ADD CHECK (category IN ('area','pet','restaurant','culture_history','season_nature','silver_disables','임시저장'));
+ALTER TABLE product ADD CHECK (guide_yn IN ('Y', 'N'));
+ALTER TABLE product MODIFY (guide_yn DEFAULT 'N');
+ALTER TABLE product MODIFY (normal_price DEFAULT 0);
+ALTER TABLE product MODIFY (guide_price DEFAULT 0);
+ALTER TABLE product MODIFY (sales_price DEFAULT 0);
+ALTER TABLE product MODIFY (sales_guide_price DEFAULT 0);
+ALTER TABLE product ADD CHECK (total_day >=0);
+ALTER TABLE product MODIFY (total_day DEFAULT 0);
+ALTER TABLE product ADD CHECK (total_time >= 0 AND total_time < 24);
+ALTER TABLE product MODIFY (total_time DEFAULT 0);
+ALTER TABLE product ADD CHECK (req_money >= 0);
+ALTER TABLE product MODIFY (req_money DEFAULT 0);
+ALTER TABLE product ADD CHECK (sleep_info IN ('Y', 'N'));
+ALTER TABLE product MODIFY (sleep_info DEFAULT 'N');
+ALTER TABLE product ADD CHECK (food_info IN ('Y', 'N'));
+ALTER TABLE product MODIFY (food_info DEFAULT 'N');
+ALTER TABLE product ADD CHECK (status IN ('판매중', '판매대기','임시저장'));
+ALTER TABLE product MODIFY (create_date NOT NULL);
+ALTER TABLE product MODIFY (create_date DEFAULT sysdate);
+ALTER TABLE product MODIFY (update_date DEFAULT sysdate);
+
+-- 시퀀스 생성
+CREATE SEQUENCE PRODUCT_PRODUCT_ID_SEQ;
+
+-- 테이블 생성
+CREATE TABLE product_image(
+        image_id  		NUMBER(10),
+        product_id  	NUMBER(10),
+        image_data  	BLOB  					NOT NULL,
+        image_order  	NUMBER(2)  			NOT NULL,
+        file_name  		varchar2(255),
+        file_size   	NUMBER,
+        mime_type  		varchar2(50),
+        upload_time 	date 						NOT NULL
+);
+
+-- 제약 조건 추가
+ALTER TABLE product_image ADD PRIMARY KEY(image_id);
+ALTER TABLE product_image ADD FOREIGN KEY(product_id) REFERENCES product(product_id) ON DELETE CASCADE;
+ALTER TABLE product_image MODIFY (upload_time DEFAULT sysdate);
+
+
+-- 시퀀스 생성
+CREATE SEQUENCE IMAGE_IMAGE_ID_SEQ;
+
+-- 테이블 생성
+CREATE TABLE product_course_point (
+        course_point_id 	NUMBER(10),
+        product_id  			NUMBER(10),
+        point_order  			NUMBER  				NOT NULL,
+        latitude  				NUMBER(9,6)  		NOT NULL,
+        longitude  				NUMBER(9,6)  		NOT NULL,
+        description   		varchar2(500),
+        created_at  			date
+);
+
+-- 제약 조건 추가
+ALTER TABLE product_course_point ADD PRIMARY KEY(course_point_id);
+ALTER TABLE product_course_point ADD FOREIGN KEY(product_id) REFERENCES product(product_id) ON DELETE CASCADE;
+ALTER TABLE product_course_point MODIFY (created_at DEFAULT sysdate);
+
+-- 시퀀스 생성
+CREATE SEQUENCE COURSE_COURSE_ID_SEQ;
+SELECT * FROM product;
+INSERT INTO PRODUCT (PRODUCT_ID,MEMBER_ID,CATEGORY,TITLE,GUIDE_YN,NORMAL_PRICE,GUIDE_PRICE,SALES_PRICE,SALES_GUIDE_PRICE,TOTAL_DAY,TOTAL_TIME,REQ_MONEY,SLEEP_INFO,TRANSPORT_INFO,FOOD_INFO,REQ_PEOPLE,TARGET,STUCKS,DESCRIPTION,DETAIL,FILE_NAME,FILE_TYPE,FILE_SIZE,FILE_DATA,PRICE_DETAIL,GPRICE_DETAIL,STATUS,CREATE_DATE,UPDATE_DATE) VALUES
+	 (product_product_id_seq.nextval,6,'culture_history','asdf','N',10,10,10,10,0,10,10,'N','버스 및 지하철 이용','N','10','10','물','10','10','file_01.txt','text/plain',36,HEXTORAW('ED8C8CEC9DBC20EC9785EBA19CEB939C20ED858CEC8AA4ED8AB8EC9AA920ED8C8CEC9DBC'),'10','10','판매중',TIMESTAMP'2025-07-25 16:21:42',NULL);
+
+COMMIT;

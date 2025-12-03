@@ -1,0 +1,171 @@
+<!-- /templates/member/joinForm.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>회원가입</title>
+
+  <link rel="stylesheet" th:href="@{/css/member/joinForm.css}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.8/dist/web/static/pretendard.css">
+  <link rel="stylesheet" th:href="@{/css/common.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+<body>
+  <div style="width:100%;text-align:left;padding:16px 0 0 24px;position:fixed;top:0;left:0;z-index:2000;background:transparent;">
+    <a href="/" style="display:inline-block;text-decoration:none;">
+      <span style="font-size:28px;font-weight:bold;color:#222;letter-spacing:2px;">MO:SI</span>
+    </a>
+  </div>
+
+  <div class="register-container">
+    <h2>MO:SI 계정 생성</h2>
+    <div class="subtitle">
+      <br>
+      이미 계정이 있으신가요?
+      <a th:href="@{/login}" style="color:#0099ad;font-weight:600;">로그인</a>
+    </div>
+
+    <form th:action="@{/members/join}" th:object="${form}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+      <div th:if="${#fields.hasGlobalErrors()}" class="error global-error">
+        <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+      </div>
+
+      <!-- ✅ 이메일 (아이디/도메인 분리) -->
+      <div class="form-group">
+        <label for="emailId">이메일<span class="required">*</span></label>
+        <div class="input-row" style="align-items:center;">
+          <input type="text" id="emailId" class="input-mosi" placeholder="example" autocomplete="username">
+          <span style="padding:10px 0px; font-size:26px; margin-top: 10px; font-weight:400; line-height:1; display:flex; align-items:center; flex:0 0 auto;">@</span>
+
+          <select id="emailDomainSelect" class="input-mosi select-mosi" style="flex:2">
+            <option value="">도메인 선택</option>
+            <option value="gmail.com">gmail.com</option>
+            <option value="naver.com">naver.com</option>
+            <option value="daum.net">daum.net</option>
+            <option value="kakao.com">kakao.com</option>
+            <option value="직접입력">직접입력</option>
+          </select>
+
+          <input type="text" id="emailDomainInput" class="input-mosi"
+                 placeholder="직접 입력 (ESC로 목록 복귀)" style="display:none;flex:2">
+
+          <button type="button" class="btn-small" id="emailCheckBtn" onclick="checkEmail()">중복 확인</button>
+        </div>
+
+        <!-- 서버 바인딩은 기존 그대로 유지: 최종 이메일을 여기에 합쳐 넣음 -->
+        <input type="hidden" th:field="*{email}" id="emailFull">
+
+        <div id="emailCheckResult" class="email-result"></div>
+      </div>
+
+      <!-- ✅ 비밀번호 -->
+      <div class="form-group">
+        <label for="passwd">비밀번호<span class="required">*</span></label>
+        <div style="position:relative;">
+          <input type="password" th:field="*{passwd}" id="passwd" class="input-mosi" placeholder="비밀번호 입력" required autocomplete="new-password">
+          <button type="button" class="toggle-password" onclick="togglePassword('passwd')">
+            <i class="fa fa-eye-slash"></i>
+          </button>
+        </div>
+        <div id="pwHint" class="error"></div>
+        <div id="pwStrength" class="pw-strength"></div>
+        <div th:if="${#fields.hasErrors('passwd')}" th:errors="*{passwd}" class="error"></div>
+      </div>
+
+      <!-- ✅ 비밀번호 확인 -->
+      <div class="form-group">
+        <label for="confirmPasswd">비밀번호 확인<span class="required">*</span></label>
+        <div style="position:relative;">
+          <input type="password" th:field="*{confirmPasswd}" id="confirmPasswd" class="input-mosi" placeholder="비밀번호 재입력" required autocomplete="new-password">
+          <button type="button" class="toggle-password" onclick="togglePassword('confirmPasswd')">
+            <i class="fa fa-eye-slash"></i>
+          </button>
+        </div>
+        <div id="confirmPwError" class="error"></div>
+
+        <div th:if="${#fields.hasErrors('confirmPasswd')}" th:errors="*{confirmPasswd}" class="error"></div>
+      </div>
+
+      <!-- ✅ 이름 & 성별 -->
+      <div class="form-group row">
+        <div>
+          <label for="name">이름<span class="required">*</span></label>
+          <input type="text" th:field="*{name}" id="name" class="input-mosi" placeholder="이름을 입력해주세요." required autocomplete="name">
+          <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></div>
+        </div>
+        <div>
+          <label for="gender">성별</label>
+          <div class="gender-options">
+            <label for="gender-male"><input type="radio" th:field="*{gender}" id="gender-male" value="남자"> 남</label>
+            <label for="gender-female"><input type="radio" th:field="*{gender}" id="gender-female" value="여자"> 여</label>
+            <label for="gender-private"><input type="radio" th:field="*{gender}" id="gender-private" value="비공개"> 비공개</label>
+          </div>
+          <div th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" class="error"></div>
+        </div>
+      </div>
+
+      <!-- ✅ 닉네임 -->
+      <div class="form-group">
+        <label for="nickname">닉네임<span class="required">*</span></label>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="nickname" name="nickname" th:field="*{nickname}" class="input-mosi" placeholder="닉네임을 입력해주세요." required autocomplete="nickname">
+          <button type="button" class="btn-small" onclick="checkNickname()">중복 확인</button>
+        </div>
+        <div id="nicknameCheckResult" class="check-msg"></div>
+        <div th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" class="error"></div>
+      </div>
+
+      <!-- ✅ 전화번호 (자동 하이픈 + 즉시 검증) -->
+      <div class="form-group">
+        <label for="tel">전화번호 <span class="required">*</span></label>
+        <input type="tel" th:field="*{tel}" id="tel" class="input-mosi" placeholder="010-0000-0000"
+               autocomplete="tel" inputmode="numeric" maxlength="13" required
+               pattern="^01[016789]-\d{3,4}-\d{4}$" title="010-1234-5678 형식으로 입력하세요" aria-describedby="telError"
+               oninput="autoHyphenTel(this)">
+        <!-- 클라이언트 에러 메시지 -->
+        <div id="telError" class="error"></div>
+      </div>
+
+
+
+      <hr class="section-divider">
+
+      <!-- ✅ 주소 -->
+      <div class="form-group" style="margin-top: 20px;">
+        <label for="zonecode">우편번호</label>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" th:field="*{zonecode}" id="zonecode" class="input-mosi" readonly placeholder="우편번호" autocomplete="postal-code">
+          <button type="button" class="btn-small" onclick="execDaumPostcode()">주소 검색</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="address">기본주소</label>
+        <input type="text" th:field="*{address}" id="address" class="input-mosi" readonly placeholder="도로명 주소" autocomplete="address-line1">
+      </div>
+
+      <div class="form-group">
+        <label for="detailAddress">상세주소</label>
+        <input type="text" th:field="*{detailAddress}" id="detailAddress" class="input-mosi" placeholder="상세주소 입력" autocomplete="address-line2">
+      </div>
+
+      <!-- ✅ 생년월일 -->
+      <div class="form-group">
+        <label for="birthDate">생년월일</label>
+        <input type="date" th:field="*{birthDate}" id="birthDate" class="input-mosi" autocomplete="bday">
+        <div id="birthError" class="error"></div>
+      </div>
+
+      <!-- ✅ 제출 -->
+      <div class="btn-wrapper">
+        <button type="submit" class="btn">계정 생성</button>
+      </div>
+    </form>
+
+    <div id="toast" class="toast-message" style="display: none;"></div>
+  </div>
+
+  <script th:src="@{/js/member/joinForm.js}"></script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+/*sellerMypageHome.css*/
+/* 공통 초기화 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Pretendard', sans-serif;
+  color: #000;
+  background-color: #fff;
+  /*padding-top: 167px;*/
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* 레이아웃 */
+.page-container {
+  width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  min-height: 1450px; /* ✅ 전체 높이 확보 */
+  display: flex;
+  flex-direction: column;
+}
+
+.mypage-container {
+  flex: 1;
+  display: flex;
+  gap: 30px;
+  padding: 40px 20px;
+  background-color: #fff;
+  min-height: calc(100vh - 150px - 80px); /* ✅ 헤더/푸터 제외 높이 확보 */
+}
+
+.profile-badge {
+  margin-top: 10px;
+}
+
+/* Content */
+.content {
+  flex-grow: 1;
+  width: auto;
+}
+
+.content h2{
+  width: 100%;
+  height: 29px;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+/* ✅ Info Summary 박스 */
+.info-summary-card {
+  position: relative;
+  width: 942px;
+  height: 196px;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 30px;
+  font-family: 'Pretendard', sans-serif;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 상단: 누적 매출액 / 팔로워 */
+.info-grid {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 123px;  /* ✅ 높이 고정 */
+}
+
+.info-grid .info-item {
+  flex: 1;
+  position: relative;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;   /* ✅ 세로 방향 정렬 */
+  justify-content: space-between; /* ✅ 위-아래 간격 배치 */
+  height: 123px; /* ✅ 상단 박스 높이 고정 */
+}
+
+/* 라벨: 위쪽 */
+.info-grid .title {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(65, 65, 65, 0.6); /* #414141 60% */
+  text-align: left;
+}
+
+/* 숫자: 아래쪽 */
+.info-grid .value {
+  font-size: 36px;
+  font-weight: bold;
+  color: #414141;
+  text-align: right;
+  position: relative;    /* ✅ after 위치 기준 */
+  padding-bottom: 4px;   /* ✅ 글자와 밑줄 간격 */
+}
+
+.info-grid .value::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;              /* ✅ 오른쪽 정렬 */
+  width: 50%;            /* ✅ 밑줄 길이 (숫자 아래 짧게) */
+  height: 1px;
+  background-color: #e5e5e5;
+}
+
+
+.info-grid .info-item:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 105px;
+  background-color: #e5e5e5;
+}
+
+/* 하단 전체 영역 (신규 주문 / 신규 문의글 / 상품 리뷰) */
+.info-grid-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background-color: #fff;
+  position: relative; /* ✅ 선 위치 고정을 위해 필요 */
+  height: 70px;
+}
+
+/* ✅ 상하 구분선 (길이 910px) */
+.info-summary-card::after {
+  content: '';
+  position: absolute;
+  top: 123px;        /* ✅ 상단 박스 높이에 맞춰 위치 */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 910px;      /* ✅ 선 길이 */
+  height: 0.5px;
+  background-color: #e5e5e5;
+}
+
+/* 각 아이템을 flex로 만들어 좌우 정렬 고정 */
+.info-grid-bottom .info-item {
+  display: flex;
+  justify-content: space-between;  /* ✅ title은 왼쪽, value는 오른쪽 */
+  align-items: center;
+  padding: 0 35px;                /* ✅ 좌우 동일한 여백 */
+  position: relative;
+}
+
+/* 구분선(아이템 사이) */
+.info-grid-bottom .info-item:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 30px;
+  background-color: #e5e5e5;
+}
+
+/* 제목(title) 스타일 */
+.info-grid-bottom .title {
+  font-size: 20px;
+  color: rgba(65,65,65,0.6);
+  font-weight: 500;
+}
+
+/* 숫자(value) 스타일 */
+.info-grid-bottom .value {
+  font-size: 24px;
+  font-weight: 700;
+  color: rgba(65,65,65,0.6);
+  border-bottom: 1px solid #e5e5e5;  /* ✅ 밑줄 추가 */
+}
+
+.view-all {
+  font-weight: 400;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+/* Recent Orders */
+.recent-orders {
+  margin-top: 57px;
+}
+.sub-text {
+  font-weight: bold;   /* ✅ 볼드체 */
+  font-size: 15px;     /* ✅ 15px 폰트 */
+  margin-left: 5px;    /* ✅ h3 제목과 간격 */
+}
+
+.recent-orders table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.recent-orders th, .recent-orders td {
+  padding: 15px 10px;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.recent-orders thead {
+  position: relative;
+  background-color: #fff;
+  border-top: 2px solid #414141;
+}
+
+.recent-orders thead::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;              /* 1.5px 대신 2px로 안정적으로 표시 */
+  background-color: #414141;
+}
+
+.recent-orders th {
+  font-size: 15px;
+  font-weight: 700;
+  padding: 15px 10px;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding-left: 20px;
+}
+
+.order-item-image {
+  width: 76px;
+  height: 66px;
+  background-color: #ececec;
+  border-radius: 4px;
+  background-size: cover;
+  background-position: center;
+}
+
+.price {
+  font-weight: bold;
+}
+
+/* ✅ 주문 테이블 스타일 (Recent Orders) */
+
+/* 날짜: order.date → 레귤러 14px #414141 */
+.recent-orders td:first-child {
+  font-size: 14px;
+  font-weight: 400;  /* Regular */
+  color: #414141;
+}
+
+/* 주문 이미지: 76x66 고정 */
+.order-item-image {
+  width: 76px;
+  height: 66px;
+  background-color: #ececec;
+  border-radius: 4px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* 상품 제목: order.title → 레귤러 14px #414141 */
+.order-item span {
+  font-size: 14px;
+  font-weight: 400; /* Regular */
+  color: #414141;
+}
+
+.recent-orders td.order-item span {
+  padding-left: 25px;  /* ✅ 이미지와 텍스트 사이 여백 */
+}
+
+/* 주문번호: order.orderNo → 볼드 14px #414141 */
+.recent-orders td:nth-child(3) {
+  font-size: 14px;
+  font-weight: 700; /* Bold */
+  color: #414141;
+}
+
+/* 결제금액: order.amount → 레귤러 14px #414141 */
+.price {
+  font-size: 14px;
+  font-weight: 400; /* Regular */
+  color: #414141;
+}
+
+
+/* 광고 */
+.ad-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f7f7;
+  padding: 15px 20px;
+  border-radius: 4px;
+  margin-top: 38px;
+  margin-bottom: 75px;
+  gap: 40px;
+}
+
+.ad-arrow {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  line-height: 22px;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* 상품 카드 */
+.home-product-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.home-product-item {
+  width: 290px;
+  height: 415px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e1e4e8;
+}
+
+.home-thumbnail img {
+  width: 290px;
+  height: 290px; /* ✅ 시안과 동일 */
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.heart-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: white;
+  text-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+.home-product-info {
+  width: 290px;
+  height: 96px;
+  padding: 12px;
+}
+
+.home-product-info h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.n-price {
+  margin-bottom: 5px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.s-price {
+  color: #0099AD;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 5px 0px;
+}
+
+.no-products {
+  text-align: center;
+  color: #777;
+  font-size: 18px;
+  padding: 40px 20px;
+  width: 850px;
+  margin-left: 40px;
+}
+
+
+/* 하단 섹션 */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-card .section-header h3 {
+  font-size: 20px;      /* ✅ 폰트 크기 */
+  font-weight: 700;     /* ✅ Bold */
+  color: #414141;       /* ✅ 글자색 (필요하면 추가) */
+}
+
